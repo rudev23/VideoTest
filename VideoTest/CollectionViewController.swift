@@ -20,7 +20,7 @@ class CollectionViewController: UIViewController {
     var timeSecond: Double?
     override func viewDidLoad() {
         super.viewDidLoad()
-//    вв
+//    вваа
     }
     
     func openCamera() {
