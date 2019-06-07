@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
+import AVKit
 
 class CollectionViewController: UIViewController {
     
@@ -16,11 +17,13 @@ class CollectionViewController: UIViewController {
     
     var controller = UIImagePickerController()
     let videoFileName = "/video.mp4"
+    var videoPath: URL?
     var imageVideo: UIImage?
     var timeSecond: Double?
+    let vc = AVPlayerViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//    вваа
     }
     
     func openCamera() {
@@ -45,6 +48,38 @@ class CollectionViewController: UIViewController {
         controller.mediaTypes = ["public.movie"]
         controller.videoQuality = .typeIFrame1280x720
         present(controller, animated: true, completion: nil)
+    }
+    
+    func playVideo(url: URL) {
+        vc.player = AVPlayer(url: url)
+        self.present(vc, animated: true) { self.vc.player?.play() }
+    }
+    
+    func uploadMedia(video: Data?, fileName: String){
+
+        guard let url = URL(string: "http://devops.api.wd.trezub.ru/medicine/files/save_file/") else {return}
+        var request = URLRequest(url: url)
+        print(fileName)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX3JvbGVfdHlwZSI6MiwibGljZW5zZV92ZXJzaW9uIjoic3BlY2lhbGlzdCAxLjEiLCJqdGkiOiJmOGRmNTZjMjFmNjQ0ZTRmYjc0M2NhNDY3MDllMmI4NiIsImV4cCI6MTU2MjI1MzY5OCwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImRkZGMiOjEsInVzZXJfcm9sZV9pZCI6MTQ1Nzc3LCJ1c2VyX2lkIjoxMDAzOH0.1Vh7_G1bQEjnr0_nGmVMEoyAkXjQ1dBtHCMyZV-yGrQ", forHTTPHeaderField: "Authorization")
+
+        if let data = video {
+
+            let json: [String: Any] = ["form-data": "mp4",
+                                        "key": data.base64EncodedString(),
+                                        "value": fileName]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            request.httpBody = jsonData
+
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let dataa = data {
+                    if let jsonString = String(data: dataa, encoding: .utf8) {
+                        print(jsonString)
+                    }
+                }
+            }.resume()
+        }
     }
 }
 
@@ -72,6 +107,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             print(dataPath)
             documentsDirectory.appendPathExtension(".mp4")
             try? videoData?.write(to: dataPath, options: [])
+            uploadMedia(video: videoData, fileName: dataPath.absoluteString)
         }
         // 3
         picker.dismiss(animated: true)
@@ -84,6 +120,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                 
                 self.imageVideo = self.generateThumbnail(path: URL(fileURLWithPath: "file://\(video)"))
                 self.collectionView.reloadData()
+               // self.playVideo(url: URL(fileURLWithPath: "file://\(video)"))
             })
         }
     }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lud-CL-0e9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lud-CL-0e9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,10 +25,19 @@
                                     <segue destination="ZvX-mA-SFZ" kind="show" id="CJJ-jt-zRO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1H-gY-eIO">
+                                <rect key="frame" x="155.5" y="185" width="64" height="30"/>
+                                <state key="normal" title="get video"/>
+                                <connections>
+                                    <action selector="getVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jk6-1P-R3f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wNk-Vs-k2b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Duo-DQ-3mf"/>
+                            <constraint firstItem="b1H-gY-eIO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.6" id="LNX-6H-4Dx"/>
+                            <constraint firstItem="b1H-gY-eIO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cXl-Tk-453"/>
                             <constraint firstItem="wNk-Vs-k2b" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="oAX-SI-jWk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
